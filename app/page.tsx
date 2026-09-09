@@ -1,6 +1,8 @@
 const Home = () => {
   return (
-    <div className="text-5xl underline">Discover developer events near you</div>
+    <div className="text-center text-2xl font-bold mt-10">
+      <h1>Discover developer events near you</h1>
+    </div>
   )
 }
 

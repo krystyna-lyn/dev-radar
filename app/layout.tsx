@@ -1,14 +1,14 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Schibsted_Grotesk, Martian_Mono } from "next/font/google";
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const schibstedGrotesk = Schibsted_Grotesk({
+  variable: "--font-schibsted-grotesk",
   subsets: ["latin"],
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const martianMono = Martian_Mono({
+  variable: "--font-martian-mono",
   subsets: ["latin"],
 });
 
@@ -21,12 +21,14 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      className={`${schibstedGrotesk.variable} ${martianMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
-        <main className="flex-1 flex flex-col">{children}</main>
+        <main className="flex-1 flex col">{children}</main>
 
       </body>
     </html>
   );
 }
+
+
