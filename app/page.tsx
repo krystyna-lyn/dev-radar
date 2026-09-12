@@ -2,18 +2,15 @@ import ExploreBtn from "@/components/ExploreBtn"
 
 const Home = () => {
   return (
-    <section>
-      <h1 className="text-center">Discover developer events near you</h1>
-      <p className="text-center mt-5">
-        Have you ever wanted to find developer events happening in your area?
-        Look no further! Dev Radar is here to help you discover and connect with the developer community around the world.
-        Hakathons, conferences, meetups, and more are just a click away</p>
+    <div className="text-center text-2xl font-bold mt-10">
+      <h1>Discover developer events near you</h1>
 
+      <p className="text-lg font-normal mt-5">Find and explore developer events happening in your area. Connect with like-minded individuals and expand your network.</p>
       <ExploreBtn />
+    </div>
 
 
 
-    </section>
   )
 }
 
