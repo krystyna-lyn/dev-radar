@@ -128,7 +128,7 @@
   }
 
   ul {
-    @apply list-disc list-inside;
+    @apply list-disc list-inside list-none;
   }
 }
 
@@ -179,7 +179,7 @@
     }
 
     .title {
-      @apply text-[20px] font-semibold line-clamp-1;
+      @apply text-[20px] font-semibold line-clamp-1 inline-flex;
     }
 
     p {
