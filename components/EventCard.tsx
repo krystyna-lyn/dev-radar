@@ -16,7 +16,7 @@ const EventCard = ({ title, image, slug, location, date }: Props) => {
                 <Image src={image} alt={title} width={400} height={200} className="poster" />
 
                 <div className="flex flex-row gap-2">
-                    <Image src="/icons/pin.svg" alt="location" width={16} height={16} />
+                    <Image src="/icons/pin.svg" alt="location" width={16} height={16} className="w-4 h-auto" />
                     <p>{location}</p>
                 </div>
 
