@@ -1,5 +1,6 @@
 import { Schema, model, models, Document, Types } from 'mongoose';
 import Event from './event.model';
+import error from 'next/error';
 
 // TypeScript interface for Booking document
 export interface IBooking extends Document {
@@ -46,18 +47,24 @@ BookingSchema.pre('save', async function (next) {
             const eventExists = await Event.findById(booking.eventId).select('_id');
 
             if (!eventExists) {
-                const error = new Error(`Event with ID ${booking.eventId} does not exist`);
+                const error = new Error(
+                    `Event with ID ${booking.eventId} does not exist`
+                );
                 error.name = 'ValidationError';
-                return next(error);
+                throw error;
             }
         } catch {
-            const validationError = new Error('Invalid events ID format or database error');
-            validationError.name = 'ValidationError';
-            return next(validationError);
+            if (error instanceof Error && error.name === 'ValidationError') {
+                throw error;
+            }
         }
+        const validationError = new Error(
+            'Invalid event ID format or database error'
+        );
+        validationError.name = 'ValidationError';
+        throw validationError;
     }
 
-    next();
 });
 
 // Create index on eventId for faster queries
