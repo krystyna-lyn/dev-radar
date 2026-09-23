@@ -2,15 +2,15 @@ import { NextRequest, NextResponse } from "next/server";
 import connectDB from "@/lib/mongodb";
 import Event from "@/database/event.model";
 
-interface RouteContext {
+type RouteParams = {
     params: Promise<{
-        slug: string
+        slug: string;
     }>;
-}
+};
 
 export async function GET(
     _req: NextRequest,
-    { params }: RouteContext
+    { params }: RouteParams
 ) {
     try {
         const { slug } = await params;
@@ -22,6 +22,7 @@ export async function GET(
                 { status: 400 }
             );
         }
+        // Normalize slug before querying the database
 
         const normalizedSlug = slug.trim().toLowerCase();
 
@@ -48,17 +49,12 @@ export async function GET(
             { event },
             { status: 200 }
         );
+
     } catch (error: unknown) {
-        console.error("Error in GET /api/events/[slug]:", error);
+        console.error("Error fetching event by slug:", error);
 
         return NextResponse.json(
-            {
-                error: "Internal Server Error",
-                message:
-                    error instanceof Error
-                        ? error.message
-                        : "An unexpected error occurred",
-            },
+            { error: "Internal Server Error" },
             { status: 500 }
         );
     }
