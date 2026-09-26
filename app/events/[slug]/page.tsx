@@ -4,7 +4,7 @@ import { notFound } from "next/navigation";
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 
 const EventDetailsItem = ({ icon, alt, label }: { icon: string, alt: string, label: string }) =>
-(<div>
+(<div className="flex gap-2">
   <Image src={icon} alt={alt} width={17} height={17} />
   <p>{label}</p>
 </div>
@@ -43,7 +43,7 @@ const EventDetailsPage = async ({ params }: { params: Promise<{ slug: string }> 
     <section id="event">
       <div className="header">
         <h1> Event Description</h1>
-        <p className="mt-2">{description}</p>
+        <p>{description}</p>
       </div>
       <div className="details">
         {/* Left side - Event details */}
@@ -58,6 +58,10 @@ const EventDetailsPage = async ({ params }: { params: Promise<{ slug: string }> 
           <section className="flex-col-gap-2">
             <h2>Event Details</h2>
             <EventDetailsItem icon="/icons/calendar.svg" alt="calendar" label={date} />
+            <EventDetailsItem icon="/icons/clock.svg" alt="calendar" label={time} />
+            <EventDetailsItem icon="/icons/pin.svg" alt="location" label={location} />
+            <EventDetailsItem icon="/icons/mode.svg" alt="calendar" label={mode} />
+            <EventDetailsItem icon="/icons/audience.svg" alt="calendar" label={audience} />
 
           </section>
 
