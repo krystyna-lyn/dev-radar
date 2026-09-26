@@ -3,6 +3,13 @@ import { notFound } from "next/navigation";
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 
+const EventDetailsItem = ({ icon, alt, label }: { icon: string, alt: string, label: string }) => {
+  <div>
+    <Image src={icon} alt={alt} width={17} height={17} />
+    <p>{label}</p>
+  </div>
+}
+
 const EventDetailsPage = async ({ params }: { params: Promise<{ slug: String }> }) => {
 
   const { slug } = await params;
