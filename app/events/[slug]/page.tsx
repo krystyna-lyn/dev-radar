@@ -3,20 +3,41 @@ import { notFound } from "next/navigation";
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 
-const EventDetailsItem = ({ icon, alt, label }: { icon: string, alt: string, label: string }) => {
-  <div>
-    <Image src={icon} alt={alt} width={17} height={17} />
-    <p>{label}</p>
-  </div>
-}
+const EventDetailsItem = ({ icon, alt, label }: { icon: string, alt: string, label: string }) =>
+(<div>
+  <Image src={icon} alt={alt} width={17} height={17} />
+  <p>{label}</p>
+</div>
+)
 
-const EventDetailsPage = async ({ params }: { params: Promise<{ slug: String }> }) => {
+
+const EventDetailsPage = async ({ params }: { params: Promise<{ slug: string }> }) => {
 
   const { slug } = await params;
   const request = await fetch(`${BASE_URL}/api/events/${slug}`);
-  const { event: { description, image, overview, date, time, location, mode, agenda, audience, tags } } = await request.json();
 
-  if (!description) return notFound();
+  if (!request.ok) {
+    return notFound();
+  }
+  const { event } = await request.json();
+
+  if (!event) {
+    return notFound();
+  }
+
+  const {
+    description,
+    image,
+    overview,
+    date,
+    time,
+    location,
+    mode,
+    agenda,
+    audience,
+    tags,
+  } = event;
+
 
   return (
     <section id="event">
@@ -36,6 +57,7 @@ const EventDetailsPage = async ({ params }: { params: Promise<{ slug: String }> 
 
           <section className="flex-col-gap-2">
             <h2>Event Details</h2>
+            <EventDetailsItem icon="/icons/calendar.svg" alt="calendar" label={date} />
 
           </section>
 
