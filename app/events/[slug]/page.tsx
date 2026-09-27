@@ -1,3 +1,4 @@
+import BookEvent from "@/components/BookEvent";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 
@@ -10,6 +11,29 @@ const EventDetailsItem = ({ icon, alt, label }: { icon: string, alt: string, lab
 </div>
 )
 
+const EventAgenda = ({ agendaItems }: { agendaItems: string[] }) => (
+  <div className="agenda">
+    <h2>Agenda</h2>
+    <ul>
+      {agendaItems.map((item) => (
+        <li key={item}>{item}</li>
+      ))
+      }
+    </ul>
+  </div>
+)
+
+const EventTags = ({ tags }: { tags: string[] }) => (
+  <div className="flex flex-row gap-1.5 flex-wrap">
+    {tags.map((tag) => (
+      <div className="pill" key={tag}>
+        {tag}
+      </div>
+    ))}
+  </div>
+)
+
+const bookings = 10; // Replace with actual bookings count from the database or API
 
 const EventDetailsPage = async ({ params }: { params: Promise<{ slug: string }> }) => {
 
@@ -36,6 +60,7 @@ const EventDetailsPage = async ({ params }: { params: Promise<{ slug: string }> 
     agenda,
     audience,
     tags,
+    organizer,
   } = event;
 
 
@@ -63,13 +88,37 @@ const EventDetailsPage = async ({ params }: { params: Promise<{ slug: string }> 
             <EventDetailsItem icon="/icons/mode.svg" alt="calendar" label={mode} />
             <EventDetailsItem icon="/icons/audience.svg" alt="calendar" label={audience} />
 
+            <EventAgenda agendaItems={JSON.parse(agenda[0])} />
+
+            <section className="flex-col-gap-2">
+              <h2>About the Organizer</h2>
+              <p>{organizer}</p>
+            </section>
+
+            <EventTags tags={JSON.parse(tags[0])} />
           </section>
 
 
         </div>
         {/* Right side - Booking form */}
         <aside className="booking">
-          <p className="text-lg font-semibold">Book Event</p>
+          <div className="signup-card">
+            <h2>Book Your Spot</h2>
+            <p>Don't miss out on this exciting event! Reserve your spot now and be part of an unforgettable experience.</p>
+            {
+              bookings > 0 ? (
+                <p className="text-sm">
+                  Join the {bookings} people who have already booked their spot for this event.
+                </p>
+              ) : (
+                <p className="text-sm">
+                  Be the first to book your spot for this event.a
+                </p>
+              )
+            }
+
+            <BookEvent />
+          </div>
         </aside>
       </div>
     </section >
