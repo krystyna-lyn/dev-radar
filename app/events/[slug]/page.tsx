@@ -1,6 +1,9 @@
 import BookEvent from "@/components/BookEvent";
+import EventCard from "@/components/EventCard";
+import { IEvent } from "@/database/event.model";
 import Image from "next/image";
 import { notFound } from "next/navigation";
+import { getSimilarEventsBySlug } from "@/lib/actions/event.actions";
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 
@@ -33,11 +36,13 @@ const EventTags = ({ tags }: { tags: string[] }) => (
   </div>
 )
 
+
 const bookings = 10; // Replace with actual bookings count from the database or API
 
 const EventDetailsPage = async ({ params }: { params: Promise<{ slug: string }> }) => {
 
   const { slug } = await params;
+  const similarEvents: IEvent[] = await getSimilarEventsBySlug(slug);
   const request = await fetch(`${BASE_URL}/api/events/${slug}`);
 
   if (!request.ok) {
@@ -88,14 +93,14 @@ const EventDetailsPage = async ({ params }: { params: Promise<{ slug: string }> 
             <EventDetailsItem icon="/icons/mode.svg" alt="calendar" label={mode} />
             <EventDetailsItem icon="/icons/audience.svg" alt="calendar" label={audience} />
 
-            <EventAgenda agendaItems={JSON.parse(agenda[0])} />
+            <EventAgenda agendaItems={(agenda)} />
 
             <section className="flex-col-gap-2">
               <h2>About the Organizer</h2>
               <p>{organizer}</p>
             </section>
 
-            <EventTags tags={JSON.parse(tags[0])} />
+            <EventTags tags={(tags)} />
           </section>
 
 
@@ -121,8 +126,21 @@ const EventDetailsPage = async ({ params }: { params: Promise<{ slug: string }> 
           </div>
         </aside>
       </div>
+
+      <div className="flex w-full flex-col gap-4 pt-20">
+        <h2>Similar Events</h2>
+        <div className="events">
+          {
+            similarEvents.length > 0 && similarEvents.map((similarEvent: IEvent) => (
+              <EventCard key={similarEvent.title} {...similarEvent} />
+            ))
+          }
+        </div>
+      </div>
+
     </section >
   )
 }
 
 export default EventDetailsPage
+
