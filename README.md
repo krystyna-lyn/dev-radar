@@ -2,111 +2,123 @@
 
 Dev Radar is a full-stack web application for discovering developer events such as conferences, meetups, and hackathons.
 
-The application allows users to browse events, view detailed event information, discover similar events, and book a spot.
+The application allows users to browse events, view detailed event information, discover similar events based on shared tags, and book a spot. Event data is stored in MongoDB, images are managed with Cloudinary, and the application is built with Next.js App Router and TypeScript.
+
+## Screenshots
+
+### Home Page
+
+![Dev Radar Home Page](public/images/home.png)
+
+### Event Details
+
+![Dev Radar Event Details](public/images/event-details.png)
+
+> Screenshots can be replaced with the latest application screenshots.
+
+## Demo
+
+A live demo can be added here once the application is deployed.
 
 ## Features
 
 - Browse developer events
-- View detailed event information
-- Explore similar events based on tags
+- Explore featured events on the homepage
+- View detailed information about individual events
+- Dynamic event pages using event slugs
+- Discover similar events based on shared tags
 - Book a spot for an event
+- Store bookings in MongoDB
 - Upload event images to Cloudinary
-- Store and retrieve event data using MongoDB
-- Dynamic event pages using slugs
+- REST API for event data
+- Server-side data fetching
+- Server-side database queries
+- Next.js Cache Components
 - Responsive UI
+- Type-safe development with TypeScript
 
 ## Tech Stack
+
+### Frontend
 
 - Next.js 16
 - React
 - TypeScript
 - Tailwind CSS
+- Next.js App Router
+- React Compiler
+
+### Backend
+
+- Next.js Route Handlers
+- Next.js Server Components
+- Next.js Server Functions
+- REST API
 - MongoDB
 - Mongoose
-- Cloudinary
-- Next.js Server Components
-- Server Functions
-- REST API
+
+### External Services
+
+- MongoDB Atlas — database hosting
+- Cloudinary — image storage and delivery
+
+### Development
+
 - Git
+- npm
+- Turbopack
 
 ## Architecture
 
-The application uses Next.js App Router.
+Dev Radar uses the Next.js App Router as the main application architecture.
 
-Event data is stored in MongoDB and accessed through Mongoose.
+The frontend is built with React and Next.js Server Components. Event and booking data is stored in MongoDB and accessed through Mongoose.
 
-The application uses Next.js Route Handlers for the event API:
+Next.js Route Handlers provide the REST API for event operations.
 
-- `GET /api/events` — fetch all events
-- `GET /api/events/[slug]` — fetch a single event
+Cloudinary is used to store event images, while MongoDB stores the image URLs together with the event data.
 
-Dynamic routes are used for event details:
+Server-side functions are used for database operations such as finding similar events.
 
-- `/events/[slug]`
-
-Server-side logic is used for retrieving similar events based on shared tags.
-
-Cloudinary is used for storing event images.
-
-## Project Structure
+### High-Level Architecture
 
 ```text
-app/
-├── api/
-│   └── events/
-│       ├── route.ts
-│       └── [slug]/
-│           └── route.ts
-├── events/
-│   └── [slug]/
-│       └── page.tsx
-├── about/
-│   └── page.tsx
-├── layout.tsx
-├── page.tsx
-└── globals.css
+                         ┌──────────────────────┐
+                         │        Browser       │
+                         └──────────┬───────────┘
+                                    │
+                                    ▼
+                         ┌──────────────────────┐
+                         │   Next.js App Router │
+                         │   React Components   │
+                         └──────────┬───────────┘
+                                    │
+                 ┌──────────────────┼──────────────────┐
+                 │                  │                  │
+                 ▼                  ▼                  ▼
+          ┌─────────────┐    ┌─────────────┐   ┌─────────────┐
+          │ Route       │    │ Server      │   │ Dynamic     │
+          │ Handlers    │    │ Functions   │   │ Event Pages │
+          │ /api/events │    │             │   │ /events/... │
+          └──────┬──────┘    └──────┬──────┘   └──────┬──────┘
+                 │                  │                  │
+                 └──────────────────┼──────────────────┘
+                                    ▼
+                         ┌──────────────────────┐
+                         │       Mongoose       │
+                         └──────────┬───────────┘
+                                    │
+                                    ▼
+                         ┌──────────────────────┐
+                         │     MongoDB Atlas    │
+                         │                      │
+                         │  Events / Bookings   │
+                         └──────────────────────┘
 
-components/
-├── EventCard.tsx
-├── EventDetails.tsx
-├── BookEvent.tsx
-├── ExploreBtn.tsx
-└── ...
-
-database/
-├── event.model.ts
-└── booking.model.ts
-
-lib/
-├── mongodb.ts
-└── actions/
-    └── event.actions.ts
-
-### Event API
-
-Implemented REST API endpoints using Next.js Route Handlers for retrieving event collections and individual events by slug.
-
-### MongoDB Integration
-
-Implemented MongoDB connection management with Mongoose and created schemas for events and bookings.
-
-### Dynamic Event Pages
-
-Implemented dynamic routes using Next.js App Router:
-
-`/events/[slug]`
-
-### Similar Events
-
-Implemented server-side MongoDB queries to find events sharing tags with the current event.
-
-### Image Management
-
-Integrated Cloudinary for uploading and storing event images.
-
-### Booking System
-
-Implemented event booking functionality with a MongoDB booking model and event references.
+                         ┌──────────────────────┐
+                         │      Cloudinary      │
+                         │    Event Images      │
+                         └──────────────────────┘
 
 What I Practiced
 
@@ -149,79 +161,19 @@ Cache Components
 cacheLife
 Route Handlers
 next/image
-Key Technical Implementations
-Dynamic routing
 
-Event pages use a dynamic route:
 
-app/events/[slug]/page.tsx
 
-This allows every event to have its own URL based on its slug.
 
-REST API
 
-The project uses Next.js Route Handlers instead of a separate backend server.
 
-app/api/events/route.ts
-app/api/events/[slug]/route.ts
-MongoDB with Mongoose
 
-Database access is centralized through a reusable MongoDB connection and Mongoose models.
 
-Similar event queries
 
-Similar events are calculated from shared tags using MongoDB query operators.
 
-Current event
-      ↓
-Extract tags
-      ↓
-Find events containing matching tags
-      ↓
-Exclude current event
-      ↓
-Return similar events
-Cloudinary integration
 
-Images are uploaded to Cloudinary through the API.
 
-The resulting secure_url is saved with the event document.
 
-Booking relationships
 
-Bookings reference events using MongoDB ObjectId relationships:
 
-Event
-  │
-  └── _id
-       ↑
-       │
-   Booking.eventId
-Future Improvements
-
-Possible future improvements include:
-
-User authentication
-Event search
-Event filtering by tags
-Pagination
-Event creation dashboard
-Booking management
-Email confirmation
-Improved validation
-Automated tests
-Deployment and production monitoring
-Project Status
-
-The core event discovery, event details, similar events, image upload, API, database, and booking functionality are implemented.
-
-The project is primarily intended as a full-stack portfolio project demonstrating modern Next.js development and backend integration.
-
-Author
-
-Krystyna
-
-Frontend / Full-Stack Developer
-
-Technologies: Next.js · React · TypeScript · MongoDB · Mongoose · Tailwind CSS · Cloudinary
 ```
