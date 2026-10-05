@@ -120,39 +120,54 @@ Server-side functions are used for database operations such as finding similar e
                          │    Event Images      │
                          └──────────────────────┘
 
+
+
 What I Practiced
 
-This project was built to practice full-stack development with the modern Next.js App Router architecture.
+This project was built to practice full-stack web development with the modern Next.js App Router architecture.
 
-Frontend
-Building reusable React components
-Server Components and Client Components
-Dynamic routes
-Responsive layouts with Tailwind CSS
-TypeScript interfaces and type-safe props
-Next.js Image optimization
-Backend
-Building REST APIs with Next.js Route Handlers
-Handling GET and POST requests
-Processing multipart form data
+##Frontend
+
+React component architecture
+Reusable components
+Server Components
+Client Components
+Dynamic routing
+Responsive UI
+Tailwind CSS
+TypeScript
+Next.js Image component
+
+##Backend
+
+REST API development
+Next.js Route Handlers
+GET and POST requests
+Multipart form data
 Server-side database operations
 Server Functions
 Input validation
 Error handling
-Database
-MongoDB integration
-Mongoose schemas and models
+
+##Database
+
+MongoDB
+MongoDB Atlas
+Mongoose
+Schemas and models
 ObjectId relationships
-Querying documents
-Filtering with MongoDB operators
+MongoDB queries
+Query operators
 Unique indexes
 Timestamps
-Using .lean() for read queries
+.lean() queries
 External Services
-MongoDB Atlas
 Cloudinary image uploads
-Environment variable configuration
-Next.js
+MongoDB Atlas
+Environment variables
+
+##Next.js
+
 App Router
 Dynamic segments
 Server Components
@@ -161,6 +176,21 @@ Cache Components
 cacheLife
 Route Handlers
 next/image
+
+##Project Status
+
+The core functionality of the application is implemented, including:
+
+Event discovery
+Event details
+Dynamic event routes
+Similar event queries
+Event bookings
+MongoDB integration
+Cloudinary image uploads
+REST API
+Server-side data fetching
+Next.js caching
 
 
 
